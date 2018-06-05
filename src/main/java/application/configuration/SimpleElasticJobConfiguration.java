@@ -30,16 +30,20 @@ public class SimpleElasticJobConfiguration {
 
     @Bean(initMethod = "init")
     public JobScheduler jobScheduler(@Value("${simpleJob.cron}") final String cron,
-                                     @Value("${simpleJob.shardingTotalCount}") final int shardingTotalCount) {
+                                     @Value("${simpleJob.shardingTotalCount}") final int shardingTotalCount,
+                                     @Value("${simpleJob.shardingParameters}") final String shardingParameters) {
         JobCoreConfiguration jobCoreConfiguration = JobCoreConfiguration.newBuilder(
                 "simpleElasticJob", cron, shardingTotalCount
-        ).build();
+        ).shardingItemParameters(shardingParameters).build();
 
         SimpleJobConfiguration simpleJobConfiguration = new SimpleJobConfiguration(
                 jobCoreConfiguration, SimpleElasticJob.class.getCanonicalName()
         );
 
-        LiteJobConfiguration liteJobConfiguration = LiteJobConfiguration.newBuilder(simpleJobConfiguration).build();
+        // 为了方便测试，这里每次都用本地配置覆盖远程配置
+        LiteJobConfiguration liteJobConfiguration = LiteJobConfiguration.newBuilder(simpleJobConfiguration)
+                .overwrite(true)
+                .build();
 
         return new JobScheduler(registryCenter, liteJobConfiguration);
     }
