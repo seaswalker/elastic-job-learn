@@ -43,6 +43,8 @@ public class SimpleElasticJobConfiguration {
         // 为了方便测试，这里每次都用本地配置覆盖远程配置
         LiteJobConfiguration liteJobConfiguration = LiteJobConfiguration.newBuilder(simpleJobConfiguration)
                 .overwrite(true)
+                .maxTimeDiffSeconds(10)
+                .monitorExecution(false)
                 .build();
 
         return new JobScheduler(registryCenter, liteJobConfiguration);
