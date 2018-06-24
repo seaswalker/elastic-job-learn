@@ -15,14 +15,14 @@ public class SimpleElasticJob implements SimpleJob {
     @Override
     public void execute(ShardingContext shardingContext) {
         System.out.println(shardingContext);
-        try {
+       /* try {
             // 测试misfire
             System.out.println("开始睡眠5分钟");
             TimeUnit.MINUTES.sleep(5);
             System.out.println("任务结束");
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 }
