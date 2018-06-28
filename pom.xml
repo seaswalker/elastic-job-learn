@@ -69,6 +69,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>elastic-job-lite-console</artifactId>
+            <version>${elastic-job-lite-version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.22</version>
