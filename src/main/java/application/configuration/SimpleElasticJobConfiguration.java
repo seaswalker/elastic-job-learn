@@ -34,7 +34,7 @@ public class SimpleElasticJobConfiguration {
                                      @Value("${simpleJob.shardingParameters}") final String shardingParameters) {
         JobCoreConfiguration jobCoreConfiguration = JobCoreConfiguration.newBuilder(
                 "simpleElasticJob", cron, shardingTotalCount
-        ).shardingItemParameters(shardingParameters).build();
+        ).shardingItemParameters(shardingParameters).failover(true).build();
 
         SimpleJobConfiguration simpleJobConfiguration = new SimpleJobConfiguration(
                 jobCoreConfiguration, SimpleElasticJob.class.getCanonicalName()
@@ -44,7 +44,7 @@ public class SimpleElasticJobConfiguration {
         LiteJobConfiguration liteJobConfiguration = LiteJobConfiguration.newBuilder(simpleJobConfiguration)
                 .overwrite(true)
                 .maxTimeDiffSeconds(10)
-                .monitorExecution(false)
+                .monitorExecution(true)
                 .build();
 
         return new JobScheduler(registryCenter, liteJobConfiguration);
