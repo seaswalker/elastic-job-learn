@@ -16,7 +16,10 @@ public class SimpleElasticJob implements SimpleJob {
     public void execute(ShardingContext shardingContext) {
         System.out.println(shardingContext);
 
-        throw new RuntimeException();
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException ignore) {
+        }
     }
 
 }
